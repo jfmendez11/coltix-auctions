@@ -1,43 +1,47 @@
 /* CSS declarations go here */
 /*Napoli Color Palette*/
+div {
+    display: block;
+}
+
 .dark-blue-font {
-    color: rgb(2, 48, 90);
+    color: #0177c1;
 }
 
 .dark-blue-bckgrnd {
-    background-color: rgb(2, 48, 90);
+    background-color: #0177c1;
 }
 
 .light-blue-font {
-    color: #3092a5;
+    color: #71c6f9;
 }
 
 .light-blue-bckgrnd {
-    background-color: #3092a5;
+    background-color: #71c6f9;
 }
 
 .blue-font {
-    color: #045e8f;
+    color: #0796db;
 }
 
 .blue-bckgrnd {
-    background-color: #045e8f;
+    background-color: #0796db;
 }
 
 .beige-font {
-    color: #feefba;
+    color: #f1f4f0;
 }
 
 .beige-bckgrnd {
-    background-color: #feefba;
+    background-color: #f1f4f0;
 }
 
 .red-font {
-    color: #f62921;
+    color: #f0494b;
 }
 
 .red-bckgrnd {
-    background-color: #f62921;
+    background-color: #f0494b;
 }
 
 .raleway {
@@ -48,13 +52,44 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.search-button {
-    color: #f62921;
-    background-color: rgb(2, 48, 90);
-    border-color: #f62921;
+.nav-button {
+    color: #f0494b;
+    background-color: #0177c1;
+    border-color: #f0494b;
+    border: 2px solid #f0494b;
 }
 
-.search-button:hover {
-    color: rgb(2, 48, 90);
-    background-color:#f62921;
+.nav-button:hover {
+    color: #0177c1;
+    background-color:#f0494b;
+}
+
+.nav-link:hover {
+    color: #f0494b;
+}
+
+.navbar-brand:hover {
+    color: #f0494b;
+}
+
+.container {
+    border-radius: 15px;
+    background: #ffffff;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+#welcome {
+    margin-top: 15px; 
+}
+
+hr {
+    border-width: 2px;
+    border-color: #0796db;
+}
+
+.event {
+    margin: 10px;
+    border: 2px solid #0796db;
+    border-radius: 5px;
 }
