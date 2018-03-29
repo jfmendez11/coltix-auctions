@@ -5,7 +5,7 @@ export default class Navbar extends Component {
 
   renderNavbar() {
       return (
-        <nav className="navbar navbar-expand-lg dark-blue-bckgrnd raleway">
+        <nav className="navbar navbar-expand-lg dark-blue-bckgrnd raleway fixed-top">
             <a className="navbar-brand beige-font" href="#">Coltix Auctions</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
