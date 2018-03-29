@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 
+import Navbar from "./Navbar";
+
 export default class App extends Component {
   constructor(props) {
       super(props);
@@ -12,8 +14,13 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+        <div>  
+        <Navbar>
+            
+        </Navbar>
+        <div>
         
+        </div>
       </div>
     )
   }

@@ -1,1 +1,60 @@
 /* CSS declarations go here */
+/*Napoli Color Palette*/
+.dark-blue-font {
+    color: rgb(2, 48, 90);
+}
+
+.dark-blue-bckgrnd {
+    background-color: rgb(2, 48, 90);
+}
+
+.light-blue-font {
+    color: #3092a5;
+}
+
+.light-blue-bckgrnd {
+    background-color: #3092a5;
+}
+
+.blue-font {
+    color: #045e8f;
+}
+
+.blue-bckgrnd {
+    background-color: #045e8f;
+}
+
+.beige-font {
+    color: #feefba;
+}
+
+.beige-bckgrnd {
+    background-color: #feefba;
+}
+
+.red-font {
+    color: #f62921;
+}
+
+.red-bckgrnd {
+    background-color: #f62921;
+}
+
+.raleway {
+    font-family: 'Raleway', sans-serif;
+}
+
+.roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+.search-button {
+    color: #f62921;
+    background-color: rgb(2, 48, 90);
+    border-color: #f62921;
+}
+
+.search-button:hover {
+    color: rgb(2, 48, 90);
+    background-color:#f62921;
+}
