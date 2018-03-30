@@ -16,6 +16,7 @@ export default class Events extends Component {
       <Event
         key={i}
         event={e}
+        onClickEvent={this.props.onClickEvent}
       >
       </Event>
     );
@@ -27,6 +28,9 @@ export default class Events extends Component {
         <div className="container">
             <div className="row justify-content-center align-self-center">
                 <h3 className="raleway">Event Gallery</h3>
+            </div>
+            <div className="row justify-content-center align-self-center">
+                <a className="btn new-event-btn" href="#" role="button">Create New Event</a>
             </div>
             <hr />
             <div className="row justify-content-center align-self-center">

@@ -27,7 +27,7 @@ export default class Navbar extends Component {
                     </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" />
+                    <input className="form-control mr-sm-2" type="search" placeholder="Search For Events" />
                     <button className="btn my-2 my-sm-0 nav-button" type="submit">Search</button>
                 </form>
             </div>

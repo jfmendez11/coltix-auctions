@@ -11,7 +11,7 @@ export default class Welcome extends Component {
                     <h1 className="raleway">Coltix Auctions</h1>
                   </div>
                   <div className="row justify-content-center align-self-center">
-                    <img src="img/logo1.png" alt="Coltix Auctions logo"/>
+                    <img src="public/images/logo1.png" alt="Coltix Auctions logo"/>
                   </div>
                   <div className="row justify-content-center align-self-center roboto">
                     <h3>Look for tickets available to your favourite events</h3>

@@ -1,5 +1,5 @@
 /* CSS declarations go here */
-/*Napoli Color Palette*/
+/* Napoli Color Palette */
 div {
     display: block;
 }
@@ -92,4 +92,32 @@ hr {
     margin: 10px;
     border: 2px solid #0796db;
     border-radius: 5px;
+}
+
+.event-btn {
+    color: #0796db;
+    border-color: #0796db;
+    border: 2px solid #0796db;
+    margin: 5px;
+}
+
+.event-btn:hover {
+    background-color: #0796db;
+    color: #f1f4f0
+}
+
+.new-event-btn {
+    color: #f0494b;
+    border-color: #f0494b;
+    border: 2px solid #f0494b;
+    margin: 5px;
+}
+
+.new-event-btn:hover {
+    background-color: #f0494b;
+    color: #f1f4f0
+}
+
+.tickets {
+    margin-top: 65px;
 }

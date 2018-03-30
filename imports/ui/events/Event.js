@@ -24,6 +24,9 @@ export default class Event extends Component {
             <div className="row justify-content-center align-self-center">
                 <h6 className="roboto">Event Date: {this.props.event.date.getDate()+"/"+this.props.event.date.getMonth()+"/"+this.props.event.date.getFullYear()}</h6>
             </div>
+            <div className="row justify-content-center align-self-center">
+                <a className="btn event-btn" type="button" onClick={this.props.onClickEvent}>View Ticket Availability</a>
+            </div>
           </div>
       );
   }
