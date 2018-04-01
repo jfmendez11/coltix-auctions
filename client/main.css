@@ -148,11 +148,11 @@ hr {
 #dollar {
     background-color: #f0494b;
     color: #f1f4f0;
-    border: 1px solid #000000;
+    border: 1px solid #6c757d;
 }
 
 #bid-border {
-    border: 1px solid #000000;
+    border: 1px solid #6c757d;
 }
 
 .btn-close {

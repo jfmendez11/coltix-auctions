@@ -40,5 +40,10 @@ export default class CreateEvent extends Component {
 };
 
 CreateEvent.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  handleSubmitEvent: PropTypes.func.isRequired,
+  handleChangeName: PropTypes.func.isRequired,
+  handleChangeVenue: PropTypes.func.isRequired,
+  handleChangeDate: PropTypes.func.isRequired,
 
 };

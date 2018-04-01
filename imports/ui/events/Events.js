@@ -86,6 +86,7 @@ export default class Events extends Component {
 };
 
 Events.propTypes = {
-    events: PropTypes.array.isRequired,
-    onClickEvent: PropTypes.func.isRequired,
+  events: PropTypes.array.isRequired,
+  onClickEvent: PropTypes.func.isRequired,
+  handleSubmitEvent: PropTypes.func.isRequired,
 };

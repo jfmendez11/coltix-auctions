@@ -97,4 +97,5 @@ export default class Tickets extends Component {
 
 Tickets.propTypes = {
   event: PropTypes.object.isRequired,
+  handleSubmitTicket: PropTypes.func.isRequired,
 };

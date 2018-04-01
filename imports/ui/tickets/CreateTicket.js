@@ -39,5 +39,10 @@ export default class CreateTicket extends Component {
 };
 
 CreateTicket.propTypes = {
-
+  handleClose: PropTypes.func.isRequired,
+  handleSubmitTicket: PropTypes.func.isRequired,
+  handleChangeDescription: PropTypes.func.isRequired,
+  handleChangeIncrements: PropTypes.func.isRequired,
+  handleChangeBuyNow: PropTypes.func.isRequired,
+  handleChangeDate: PropTypes.func.isRequired,
 };
