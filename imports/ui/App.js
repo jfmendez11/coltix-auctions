@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { withTracker } from "meteor/react-meteor-data";
 
 import { EventsDB } from "../api/events";
-import { TicketsDB } from "../api/tickets";
 
 import Navbar from "./Navbar";
 import Welcome from "./Welcome";
@@ -14,89 +13,6 @@ class App extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        // events: [
-        //   {
-        //     name: "Millonarios vs Nacional",
-        //     imgSrc: "https://image.flaticon.com/icons/svg/55/55238.svg",
-        //     venue: "Estadio El Campín",
-        //     date: new Date("2018-11-25"),
-        //     tickets: [
-        //       {
-        //         description: "Occidenteal General Baja",
-        //         increments: 1000,
-        //         bids: 0,
-        //         currentBid: 0,
-        //         buyNow: 80000,
-        //         dueDate: new Date("2018-11-25")
-        //       },
-        //       {
-        //         description: "Oriental Central Baja",
-        //         increments: 1000,
-        //         bids: 2,
-        //         currentBid: 45000,
-        //         buyNow: 60000,
-        //         dueDate: new Date("2018-11-25")
-        //       },
-        //       {
-        //         description: "Lateral Sur",
-        //         increments: 1000,
-        //         bids: 1,
-        //         currentBid: 500,
-        //         buyNow: 20000,
-        //         dueDate: new Date("2018-11-25")
-        //       },
-        //       {
-        //         description: "Lateral Norte",
-        //         increments: 1000,
-        //         bids: 4,
-        //         currentBid: 2300,
-        //         buyNow: 20000,
-        //         dueDate: new Date("2018-11-25")
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     name: "Festival Estereo Picnic",
-        //     imgSrc: "https://image.flaticon.com/icons/svg/55/55238.svg",
-        //     venue: "Parque 222",
-        //     date: new Date("2019-03-23"),
-        //     tickets: [
-        //       {
-        //         description: "Combo 3 días",
-        //         increments: 1000,
-        //         bids: 4,
-        //         currentBid: 450000,
-        //         buyNow: 500000,
-        //         dueDate: new Date("2019-03-23")
-        //       },
-        //       {
-        //         description: "2 Día",
-        //         increments: 1000,
-        //         bids: 1,
-        //         currentBid: 250000,
-        //         buyNow: 310000,
-        //         dueDate: new Date("2019-03-23")
-        //       },
-        //       {
-        //         description: "Días 1 y 2",
-        //         increments: 1000,
-        //         bids: 3,
-        //         currentBid: 4750000,
-        //         buyNow: 550000,
-        //         dueDate: new Date("2019-03-23")
-        //       },
-              // {
-              //   eventId: "5ac046c7c7bdebf273fd6481",
-              //   description: "Día 1",
-              //   increments: 1000,
-              //   bids: 3,
-              //   currentBid: 200000,
-              //   buyNow: 310000,
-              //   dueDate: new Date("2019-03-23")
-              // },
-        //     ],
-        //   },
-        // ],
         view: "home",
         currentEvent: {},
       };
@@ -111,16 +27,6 @@ class App extends Component {
   }
 
   handleSubmitTicket(ticket) {
-    /*let eventsList = this.props.events;
-    for (let i = 0; i < eventsList.length; i++) {
-      if(eventsList[i]._id === this.state.currentEvent._id) {
-        eventsList[i].tickets.push(ticket);
-        break;
-      }
-    }
-    this.setState({
-      events: eventsList,
-    });*/
     let ticketList = this.state.currentEvent.tickets;
     ticketList.push(ticket);
     EventsDB.update(this.state.currentEvent._id, {
@@ -136,7 +42,6 @@ class App extends Component {
         break;
       }
     }
-    console.log(ticketList);
     EventsDB.update(this.state.currentEvent._id, {
       $set: {tickets: ticketList}
     });
@@ -144,6 +49,19 @@ class App extends Component {
 
   homeClick() {
     this.setState({view: "home", currentEvent: {}});
+  }
+
+  onClickSearch(eventName) {
+    let event = {};
+    for (let i = 0; i < this.props.events.length; i++) {
+      if(this.props.events[i].name === eventName) {
+        event = this.props.events[i];
+        break;
+      }
+    }
+    if(event.name === eventName) {
+      this.setState({view: "event", currentEvent: event});
+    }
   }
 
   homeWrapper() {
@@ -166,7 +84,7 @@ class App extends Component {
     return (
       <div>
         <header>
-          <Navbar homeClick={this.homeClick.bind(this)}></Navbar>
+          <Navbar homeClick={this.homeClick.bind(this)} events={this.props.events} onClickSearch={this.onClickSearch.bind(this)}></Navbar>
         </header>
         {currentView}
       </div>

@@ -27,21 +27,6 @@ export default class Ticket extends Component {
           <div className="row justify-content-center align-self-center">
               <h5 className="raleway">Description: {this.props.ticket.description}</h5>
           </div>
-          {/*<div className="row justify-content-center align-self-center">
-              <h6 className="roboto">Bids: {this.state.bids}</h6>
-          </div>
-          <div className="row justify-content-center align-self-center">
-              <h6 className="roboto">Increments: {this.props.ticket.increments}</h6>
-          </div>
-          <div className="row justify-content-center align-self-center">
-              <h6 className="roboto">Current Bid: {this.state.bid}</h6>
-          </div>
-          <div className="row justify-content-center align-self-center">
-              <h6 className="roboto">Buy Now Price: {this.props.ticket.buyNow}</h6>
-          </div>
-          <div className="row justify-content-center align-self-center">
-            <h6 className="roboto">Time Left: {this.state.days}:{this.state.hours}:{this.state.minutes}:{this.state.seconds}</h6>
-          </div>*/}
           <div className="row justify-content-center align-self-center">
               <table className="robto">
                 <tbody>
