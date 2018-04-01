@@ -1,102 +1,104 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
+import { withTracker } from "meteor/react-meteor-data";
+
+import { EventsDB } from "../api/events";
+import { TicketsDB } from "../api/tickets";
 
 import Navbar from "./Navbar";
 import Welcome from "./Welcome";
 import Events from "./events/Events";
 import Tickets from "./tickets/Tickets";
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        events: [
-          {
-            _id: "1",
-            name: "Millonarios vs Nacional",
-            imgSrc: "https://image.flaticon.com/icons/svg/55/55238.svg",
-            venue: "Estadio El Campín",
-            date: new Date("2018-11-25"),
-            tickets: [
-              {
-                description: "Occidenteal General Baja",
-                increments: 1000,
-                bids: 0,
-                currentBid: 0,
-                buyNow: 80000,
-                dueDate: new Date("2018-11-25")
-              },
-              {
-                description: "Oriental Central Baja",
-                increments: 1000,
-                bids: 2,
-                currentBid: 45000,
-                buyNow: 60000,
-                dueDate: new Date("2018-11-25")
-              },
-              {
-                description: "Lateral Sur",
-                increments: 1000,
-                bids: 1,
-                currentBid: 500,
-                buyNow: 20000,
-                dueDate: new Date("2018-11-25")
-              },
-              {
-                description: "Lateral Norte",
-                increments: 1000,
-                bids: 4,
-                currentBid: 2300,
-                buyNow: 20000,
-                dueDate: new Date("2018-11-25")
-              },
-            ],
-          },
-          {
-            _id: "2",
-            name: "Festival Estereo Picnic",
-            imgSrc: "https://image.flaticon.com/icons/svg/55/55238.svg",
-            venue: "Parque 222",
-            date: new Date("2019-03-23"),
-            tickets: [
-              {
-                description: "Combo 3 días",
-                increments: 1000,
-                bids: 4,
-                currentBid: 450000,
-                buyNow: 500000,
-                dueDate: new Date("2019-03-23")
-              },
-              {
-                description: "2 Día",
-                increments: 1000,
-                bids: 1,
-                currentBid: 250000,
-                buyNow: 310000,
-                dueDate: new Date("2019-03-23")
-              },
-              {
-                description: "Días 1 y 2",
-                increments: 1000,
-                bids: 3,
-                currentBid: 4750000,
-                buyNow: 550000,
-                dueDate: new Date("2019-03-23")
-              },
-              {
-                description: "Día 1",
-                increments: 1000,
-                bids: 3,
-                currentBid: 200000,
-                buyNow: 310000,
-                dueDate: new Date("2019-03-23")
-              },
-            ],
-          },
-        ],
+        // events: [
+        //   {
+        //     name: "Millonarios vs Nacional",
+        //     imgSrc: "https://image.flaticon.com/icons/svg/55/55238.svg",
+        //     venue: "Estadio El Campín",
+        //     date: new Date("2018-11-25"),
+        //     tickets: [
+        //       {
+        //         description: "Occidenteal General Baja",
+        //         increments: 1000,
+        //         bids: 0,
+        //         currentBid: 0,
+        //         buyNow: 80000,
+        //         dueDate: new Date("2018-11-25")
+        //       },
+        //       {
+        //         description: "Oriental Central Baja",
+        //         increments: 1000,
+        //         bids: 2,
+        //         currentBid: 45000,
+        //         buyNow: 60000,
+        //         dueDate: new Date("2018-11-25")
+        //       },
+        //       {
+        //         description: "Lateral Sur",
+        //         increments: 1000,
+        //         bids: 1,
+        //         currentBid: 500,
+        //         buyNow: 20000,
+        //         dueDate: new Date("2018-11-25")
+        //       },
+        //       {
+        //         description: "Lateral Norte",
+        //         increments: 1000,
+        //         bids: 4,
+        //         currentBid: 2300,
+        //         buyNow: 20000,
+        //         dueDate: new Date("2018-11-25")
+        //       },
+        //     ],
+        //   },
+        //   {
+        //     name: "Festival Estereo Picnic",
+        //     imgSrc: "https://image.flaticon.com/icons/svg/55/55238.svg",
+        //     venue: "Parque 222",
+        //     date: new Date("2019-03-23"),
+        //     tickets: [
+        //       {
+        //         description: "Combo 3 días",
+        //         increments: 1000,
+        //         bids: 4,
+        //         currentBid: 450000,
+        //         buyNow: 500000,
+        //         dueDate: new Date("2019-03-23")
+        //       },
+        //       {
+        //         description: "2 Día",
+        //         increments: 1000,
+        //         bids: 1,
+        //         currentBid: 250000,
+        //         buyNow: 310000,
+        //         dueDate: new Date("2019-03-23")
+        //       },
+        //       {
+        //         description: "Días 1 y 2",
+        //         increments: 1000,
+        //         bids: 3,
+        //         currentBid: 4750000,
+        //         buyNow: 550000,
+        //         dueDate: new Date("2019-03-23")
+        //       },
+              // {
+              //   eventId: "5ac046c7c7bdebf273fd6481",
+              //   description: "Día 1",
+              //   increments: 1000,
+              //   bids: 3,
+              //   currentBid: 200000,
+              //   buyNow: 310000,
+              //   dueDate: new Date("2019-03-23")
+              // },
+        //     ],
+        //   },
+        // ],
         view: "home",
         currentEvent: {},
-        currentTicket: {},
       };
   }
 
@@ -105,15 +107,11 @@ export default class App extends Component {
   }
 
   handleSubmitEvent(event) {
-    let eventsList = this.state.events;
-    eventsList.push(event);
-    this.setState({
-      events: eventsList,
-    });
+    EventsDB.insert(event);
   }
 
   handleSubmitTicket(ticket) {
-    let eventsList = this.state.events;
+    /*let eventsList = this.props.events;
     for (let i = 0; i < eventsList.length; i++) {
       if(eventsList[i]._id === this.state.currentEvent._id) {
         eventsList[i].tickets.push(ticket);
@@ -122,25 +120,44 @@ export default class App extends Component {
     }
     this.setState({
       events: eventsList,
-    })
+    });*/
+    let ticketList = this.state.currentEvent.tickets;
+    ticketList.push(ticket);
+    EventsDB.update(this.state.currentEvent._id, {
+      $set: {tickets: ticketList}
+    });
+  }
+
+  handleBidSubmit(ticket) {
+    let ticketList = this.state.currentEvent.tickets;
+    for (let i = 0; i < ticketList.length; i++) {
+      if (ticketList[i].id === ticket.id) {
+        ticketList[i] = ticket;
+        break;
+      }
+    }
+    console.log(ticketList);
+    EventsDB.update(this.state.currentEvent._id, {
+      $set: {tickets: ticketList}
+    });
   }
 
   homeClick() {
-    this.setState({view: "home", currentTicket: {}, currentEvent: {}});
+    this.setState({view: "home", currentEvent: {}});
   }
 
   homeWrapper() {
     return (
       <div>
         <Welcome></Welcome>
-        <Events events={this.state.events} onClickEvent={this.onClickEvent.bind(this)} handleSubmitEvent={this.handleSubmitEvent.bind(this)}></Events>
+        <Events events={this.props.events} onClickEvent={this.onClickEvent.bind(this)} handleSubmitEvent={this.handleSubmitEvent.bind(this)}></Events>
       </div>
     );
   }
 
   ticketWrapper() {
     return (
-      <Tickets event={this.state.currentEvent} handleSubmitTicket={this.handleSubmitTicket.bind(this)}/>
+      <Tickets event={this.state.currentEvent} handleBidSubmit={this.handleBidSubmit.bind(this)} handleSubmitTicket={this.handleSubmitTicket.bind(this)}/>
     );
   }
 
@@ -158,5 +175,11 @@ export default class App extends Component {
 };
 
 App.propTypes = {
-
+  events: PropTypes.array.isRequired,
 };
+
+export default withTracker(() => {
+  return {
+    events: EventsDB.find({}).fetch(), 
+  };
+})(App);

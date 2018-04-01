@@ -33,7 +33,7 @@ export default class Event extends Component {
                   </tr>
                   <tr>
                     <td className="table-cell text-center bold-text">Event Date</td>
-                    <td className="table-cell text-center">{this.props.event.date.getDate()+"/"+this.props.event.date.getMonth()+"/"+this.props.event.date.getFullYear()}</td>
+                    <td className="table-cell text-center">{this.props.event.date.getDate()+1+"/"+(this.props.event.date.getMonth()+1)+"/"+this.props.event.date.getFullYear()}</td>
                   </tr>
                 </tbody>
               </table>

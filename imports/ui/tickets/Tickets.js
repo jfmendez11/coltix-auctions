@@ -47,12 +47,15 @@ export default class Tickets extends Component {
   }
 
   handleSubmitTicket() {
+    let pos = this.props.event.tickets.length - 1 < 0 ? -1 : this.props.event.tickets.length - 1;
+    let newId = pos === -1 ? 1 : this.props.event.tickets[pos].id + 1
     let newTckt = {
-      description: this.state.name,
-      increments: this.state.venue,
+      id: newId,
+      description: this.state.description,
+      increments: parseInt(this.state.increments),
       bids: 0,
       currentBid: 0,
-      buyNow: this.state.buyNow,
+      buyNow: parseInt(this.state.buyNow),
       dueDate: new Date(this.state.dueDate),
     }
     this.props.handleSubmitTicket(newTckt);
@@ -64,6 +67,7 @@ export default class Tickets extends Component {
       <Ticket
         key={i}
         ticket={t}
+        handleBidSubmit={this.props.handleBidSubmit}
       >
       </Ticket>
     );
@@ -98,4 +102,5 @@ export default class Tickets extends Component {
 Tickets.propTypes = {
   event: PropTypes.object.isRequired,
   handleSubmitTicket: PropTypes.func.isRequired,
+  handleBidSubmit: PropTypes.func.isRequired,
 };
