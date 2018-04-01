@@ -6,7 +6,7 @@ export default class Navbar extends Component {
   renderNavbar() {
       return (
         <nav className="navbar navbar-expand-lg dark-blue-bckgrnd raleway fixed-top">
-            <a className="navbar-brand beige-font" href="#">
+            <a className="navbar-brand beige-font" onClick={this.props.homeClick} href="/">
                 {/*<img src="/img/logo2.png" width="30" height="30" className="d-inline-block align-top" alt="Coltix Auctions logo"/>*/}
                 Coltix Auctions
             </a>
@@ -17,13 +17,13 @@ export default class Navbar extends Component {
             <div className="collapse navbar-collapse raleway" id="navbarTogglerDemo02">
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li className="nav-item active">
-                        <a className="nav-link beige-font" href="#">Home <span className="sr-only">(current)</span></a>
+                        <a className="nav-link beige-font" onClick={this.props.homeClick} href="/">Home <span className="sr-only">(current)</span></a>
                      </li>
                     <li className="nav-item">
-                        <a className="nav-link beige-font" href="#">Register</a>
+                        <a className="nav-link beige-font" href="/#">Register</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link beige-font" href="#">Disabled</a>
+                        <a className="nav-link beige-font" href="/#">Disabled</a>
                     </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
