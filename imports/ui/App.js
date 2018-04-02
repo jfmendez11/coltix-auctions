@@ -11,11 +11,11 @@ import Tickets from "./tickets/Tickets";
 
 class App extends Component {
   constructor(props) {
-      super(props);
-      this.state = {
-        view: "home",
-        currentEvent: {},
-      };
+    super(props);
+    this.state = {
+      view: "home",
+      currentEvent: {},
+    };
   }
 
   onClickEvent(event) {
