@@ -110,10 +110,10 @@ export default class Navbar extends Component {
                     <a className="nav-link beige-font" href="login">Login <span className="sr-only">(current)</span></a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link beige-font" href="/myTickets">My Tickets <span className="sr-only">(current)</span></a>
+                    <a className="nav-link beige-font" href={Meteor.user()? "/myTickets": "/login"}>My Tickets <span className="sr-only">(current)</span></a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link beige-font" href="/myBids">My Bids <span className="sr-only">(current)</span></a>
+                    <a className="nav-link beige-font" href={Meteor.user()? "/myBids": "/login"}>My Bids <span className="sr-only">(current)</span></a>
                   </li>
               </ul>
               <form className="form-inline my-2 my-lg-0">

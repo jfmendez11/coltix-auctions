@@ -97,25 +97,25 @@ class Login extends Component {
       <div className="form-group row">
         <label className="col-2 col-form-label roboto">Name</label>
         <div className="col-10">
-          <input className="form-control" type="text" placeholder="Name" id="example-Name-input" onChange={this.handleChangeName.bind(this)} />
+          <input className="form-control" type="text" placeholder="Name" id="create-Name-input" onChange={this.handleChangeName.bind(this)} />
         </div>
       </div>
       <div className="form-group row">
         <label className="col-2 col-form-label roboto">Email</label>
         <div className="col-10">
-          <input className="form-control" type="text" placeholder="Email" id="example-Email-input" onChange={this.handleChangeEmail.bind(this)} />
+          <input className="form-control" type="text" placeholder="Email" id="create-Email-input" onChange={this.handleChangeEmail.bind(this)} />
         </div>
       </div>
       <div className="form-group row">
         <label className="col-2 col-form-label roboto">Username</label>
         <div className="col-10">
-          <input className="form-control" type="text" placeholder="Username" id="example-Username-input" onChange={this.handleChangeUsern.bind(this)} />
+          <input className="form-control" type="text" placeholder="Username" id="create-Username-input" onChange={this.handleChangeUsern.bind(this)} />
         </div>
       </div>
       <div className="form-group row">
         <label className="col-2 col-form-label roboto">Password</label>
         <div className="col-10">
-          <input className="form-control" type="password" placeholder="Password" id="example-Password-input" onChange={this.handleChangePass.bind(this)} />
+          <input className="form-control" type="password" placeholder="Password" id="create-Password-input" onChange={this.handleChangePass.bind(this)} />
         </div>
       </div>
       <div className="row justify-content-center align-self-center">
@@ -131,13 +131,13 @@ class Login extends Component {
       <div className="form-group row">
         <label className="col-2 col-form-label roboto">Username</label>
         <div className="col-10">
-          <input className="form-control" type="text" placeholder="Username" id="example-Username-input" onChange={this.handleChangeUsern.bind(this)} />
+          <input className="form-control" type="text" placeholder="Username" id="login-Username-input" onChange={this.handleChangeUsern.bind(this)} />
         </div>
       </div>
       <div className="form-group row">
         <label className="col-2 col-form-label roboto">Password</label>
         <div className="col-10">
-          <input className="form-control" type="password" placeholder="Password" id="example-Password-input" onChange={this.handleChangePass.bind(this)} />
+          <input className="form-control" type="password" placeholder="Password" id="login-Password-input" onChange={this.handleChangePass.bind(this)} />
         </div>
       </div>
       <div className="row justify-content-center align-self-center">
@@ -164,14 +164,16 @@ class Login extends Component {
   }
 
   render() {
-    let show = this.props.currentUser ? this.renderLogout() : (this.state.login ? this.renderLogin() : (this.state.create ? this.renderCreate() : this.renderOptions()));
+    let show = this.props.currentUser ? this.renderLogout() : (
+      <div className = "row"><div className="col-6">{this.renderLogin()}</div><div className="col-6">{this.renderCreate()}</div></div>)
+      // this.state.login ? this.renderLogin() : (this.state.create ? this.renderCreate() : this.renderOptions()));
     return (<div><Navbar events={this.props.list} onClickSearch={this.props.onClickSearch}></Navbar> <div className="container container-2" id="login" >{show}</div></div>);
   }
 };
 
 export default withTracker(() => {
   return {
-    list: EventsDB.find({"date": { $gte: new Date()}}).fetch(),
+    list: EventsDB.find({}).fetch(),
     currentUser: Meteor.user(),
   };
 })(Login);

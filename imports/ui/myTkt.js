@@ -15,7 +15,7 @@ class myTkt extends Component {
     return (
       <div>
         <div>
-          <Navbar events={this.props.list} onClickSearch={this.props.onClickSearch}></Navbar>
+          <Navbar events={this.props.events}  onClickSearch={this.props.onClickSearch}></Navbar>
         </div>
       </div>
     );
@@ -25,7 +25,8 @@ class myTkt extends Component {
 export default withTracker(() => {
   Meteor.subscribe('myTickets');
   return {
-    list: EventsDB.find({"date": { $gte: new Date()}}).fetch(),
+    list: EventsDB.find().fetch(),
     currentUser: Meteor.user(),
+    events: []
   };
 })(myTkt);

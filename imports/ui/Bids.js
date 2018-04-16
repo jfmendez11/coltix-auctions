@@ -24,6 +24,7 @@ class Bids extends Component {
 
 export default withTracker(() => {
   Meteor.subscribe('allBids');
+  Meteor.subscribe("allEvents");
   return {
     list: BidsDB.find().fetch(),
     events: EventsDB.find({"date": { $gte: new Date()}}).fetch(),

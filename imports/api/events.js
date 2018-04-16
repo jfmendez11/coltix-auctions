@@ -8,22 +8,8 @@ export const BidsDB = new Mongo.Collection("bids");
 
 if (Meteor.isServer) {
     // This code only runs on the server
-    // Meteor.publish('myTickets', function myTicketsPublication() {
-    //     var pipeline = [
-    //         { $unwind: "$tickets" },
-    //         { $match: { name: "EventoTickets" } }
-    //     ];
-    //     let t = EventsDB.aggregate(pipeline).map((child)=> child.childId );;
-    // });
 
     Meteor.publish('myTickets', function () {
-        // var pipeline = [{
-        //     $project: {
-        //         '_id': 0
-        //     }
-        // },
-        // { $unwind: "$tickets" }
-        // ];
         let pipeline = [{
             $unwind: {
                 path: '$tickets',
@@ -39,11 +25,13 @@ if (Meteor.isServer) {
                         }
                     ]
                 },
-                evtName : '$name',
-                evtVenue : '$venue',
-                evtDate : '$date',
-                tkt : '$tickets',
+                evtName: '$name',
+                evtVenue: '$venue',
+                evtDate: '$date',
+                tkt: '$tickets',
             }
+        }, {
+            $match: { "tkt.owner": this.userId }
         }]
         ReactiveAggregate(this, EventsDB, pipeline);
     });
