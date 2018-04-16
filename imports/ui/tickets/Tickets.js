@@ -183,7 +183,7 @@ export default withTracker((props) => {
   Meteor.subscribe('oneEvt', evtId);
   Meteor.subscribe('allBids');
   return {
-    list: EventsDB.find({}).fetch(),
+    list: EventsDB.find({"date": { $gte: new Date()}}).fetch(),
     event: EventsDB.find().fetch()[0],
     currentUser: Meteor.user(),
   };

@@ -25,7 +25,7 @@ class myTkt extends Component {
 export default withTracker(() => {
   Meteor.subscribe('myTickets');
   return {
-    list: EventsDB.find({}).fetch(),
+    list: EventsDB.find({"date": { $gte: new Date()}}).fetch(),
     currentUser: Meteor.user(),
   };
 })(myTkt);

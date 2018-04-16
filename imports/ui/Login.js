@@ -171,7 +171,7 @@ class Login extends Component {
 
 export default withTracker(() => {
   return {
-    list: EventsDB.find({}).fetch(),
+    list: EventsDB.find({"date": { $gte: new Date()}}).fetch(),
     currentUser: Meteor.user(),
   };
 })(Login);

@@ -41,7 +41,7 @@ class App extends Component {
 export default withTracker(() => {
   Meteor.subscribe('allEvents');
   return {
-    events: EventsDB.find({}, { sort: { name: 1 } }).fetch(),
+    events: EventsDB.find({"date": { $gte: new Date()}}, { sort: { name: 1 } }).fetch(),
     currentUser: Meteor.user(),
   };
 })(App);
