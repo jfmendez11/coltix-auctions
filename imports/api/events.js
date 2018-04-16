@@ -117,6 +117,10 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
+        if (this.userId == owner) {
+            throw new Meteor.Error("Can't bid on your own ticket.");
+        }
+
         let ticketList = EventsDB.findOne({ _id: evtId }).tickets;
         let ticket;
         let tktIndex = 0;
