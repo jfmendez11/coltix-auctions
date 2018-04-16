@@ -10,9 +10,7 @@ export default class Ticket extends Component {
       hours: 0,
       minutes: 0,
       seconds: 0,
-      bid: this.props.ticket.currentBid,
-      bids: this.props.ticket.bids,
-      newBid: false,
+      bid: this.props.ticket.currentBid
     };
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
@@ -32,7 +30,7 @@ export default class Ticket extends Component {
                 <tbody>
                   <tr>
                     <td className="table-cell text-center bold-text">Bids</td>
-                    <td className="table-cell text-center">{this.state.bids}</td>
+                    <td className="table-cell text-center">{this.props.ticket.bids}</td>
                   </tr>
                   <tr>
                     <td className="table-cell text-center bold-text">Increments</td>
@@ -40,7 +38,7 @@ export default class Ticket extends Component {
                   </tr>
                   <tr>
                     <td className="table-cell text-center bold-text">Current Bid</td>
-                    <td className="table-cell text-center">{this.state.bid}</td>
+                    <td className="table-cell text-center">{this.props.ticket.currentBid}</td>
                   </tr>
                   <tr>
                     <td className="table-cell text-center bold-text">Buy Now Price</td>
@@ -68,23 +66,16 @@ export default class Ticket extends Component {
   }
 
   handleSubmit(e) {
-    if(this.state.newBid) {
-      alert("A new bid was submitted");
-      this.setState({newBid: false});
-      let ticketWithBid = this.props.ticket;
-      ticketWithBid.currentBid = this.state.bid;
-      ticketWithBid.bids = this.state.bids;
-      this.props.handleBidSubmit(ticketWithBid);
-    }
-    else alert("Your bid is below the current one or the increment is too small");
     e.preventDefault();
+    let value = this.state.bid;
+    let owner = this.props.ticket.owner;
+    let idTkt = this.props.ticket.id;
+    this.props.handleBidSubmit(value, owner,idTkt);
   } 
 
   handleChange(e) {
     if(e.key === "Enter") {
-      if(parseInt(e.target.value) > this.state.bid && (e.target.value  - this.state.bid) >= this.props.ticket.increments) {
-        this.setState({bid: parseInt(e.target.value), bids: this.state.bids + 1, newBid: true});
-      }
+      this.setState({bid: parseInt(e.target.value)});
     }
   }
 
@@ -124,9 +115,4 @@ export default class Ticket extends Component {
       </div>
     )
   }
-};
-
-Ticket.propTypes = {
-  ticket: PropTypes.object.isRequired,
-  handleBidSubmit: PropTypes.func.isRequired,
 };

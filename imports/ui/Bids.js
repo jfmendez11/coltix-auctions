@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { withTracker } from "meteor/react-meteor-data";
-import { EventsDB } from "../api/events";
+import { EventsDB, BidsDB } from "../api/events";
 import Navbar from "./Navbar";
-import Welcome from "./Welcome";
 import Events from "./events/Events";
 import { Accounts } from 'meteor/accounts-base';
 
 // import Tickets from './tickets/Tickets';
 
-class App extends Component {
+class Bids extends Component {
 
   render() {
+    console.log(this.props.list);    
     return (
       <div>
         <div>
-          <Welcome></Welcome>
-          <Navbar events={this.props.events} ></Navbar>
-          <Events events={this.props.events} currentUser={this.props.currentUser}></Events>
+          <Navbar events={[]} ></Navbar>
         </div>
       </div>
     );
@@ -25,9 +23,9 @@ class App extends Component {
 };
 
 export default withTracker(() => {
-  Meteor.subscribe('allEvents');
+  Meteor.subscribe('allBids');
   return {
-    events: EventsDB.find({}, { sort: { date: 1 } }).fetch(),
+    list: BidsDB.find().fetch(),
     currentUser: Meteor.user(),
   };
-})(App);
+})(Bids);

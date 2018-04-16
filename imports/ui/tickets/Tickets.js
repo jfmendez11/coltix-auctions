@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-
+import { withTracker } from "meteor/react-meteor-data";
+import { Link } from 'react-router-dom'
+import { EventsDB, BidsDB } from "../../api/events";
 import Ticket from "./Ticket";
-import CreateTicket from "./CreateTicket";
+import Navbar from "../Navbar";
 
-export default class Tickets extends Component {
+
+class Tickets extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,93 +17,157 @@ export default class Tickets extends Component {
       bids: 0,
       currentBid: 0,
       buyNow: 0,
+      minPrice: 0,
       dueDate: "",
     };
   }
 
   componentDidMount() {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
   handleClick() {
-    this.setState({showAdd: true});
+    this.setState({ showAdd: true });
   }
 
   handleClose() {
-    this.setState({showAdd: false});
+    this.setState({ showAdd: false });
   }
 
   handleChangeDescription(e) {
-    this.setState({description: e.target.value});
+    this.setState({ description: e.target.value });
   }
 
   handleChangeIncrements(e) {
-    this.setState({increments: e.target.value});
+    this.setState({ increments: e.target.value });
   }
 
   handleChangeBuyNow(e) {
-    this.setState({buyNow: e.target.value});
+    this.setState({ buyNow: e.target.value });
+  }
+
+  handleChangeMinPrice(e) {
+    this.setState({ minPrice: e.target.value });
   }
 
   handleChangeDate(e) {
-    this.setState({dueDate: e.target.value});
+    this.setState({ dueDate: e.target.value });
   }
 
-  handleSubmitTicket() {
-    let pos = this.props.event.tickets.length - 1 < 0 ? -1 : this.props.event.tickets.length - 1;
-    let newId = pos === -1 ? 1 : this.props.event.tickets[pos].id + 1
-    let newTckt = {
-      id: newId,
-      description: this.state.description,
-      increments: parseInt(this.state.increments),
-      bids: 0,
-      currentBid: 0,
-      buyNow: parseInt(this.state.buyNow),
-      dueDate: new Date(this.state.dueDate),
-    }
-    this.props.handleSubmitTicket(newTckt);
-    this.setState({showAdd: false});
+  handleAddTicket() {
+    let evtId = this.props.match.params.id;
+    let section = this.state.description;
+    let incs = parseInt(this.state.increments);
+    let minPrice = parseInt(this.state.minPrice);
+    let buyNow = parseInt(this.state.buyNow);
+    let date = new Date(this.state.dueDate);
+    Meteor.call('tickets.add', section, incs, buyNow, minPrice, date, evtId, (err) => {
+      if (err) alert(err);
+      else alert("Ticket added");
+    });
+    this.setState({ showAdd: false });
+  }
+
+  handleBidSubmit(value, owner, idTkt) {
+    let evtId = this.props.match.params.id;
+    Meteor.call('bid.add', owner, idTkt, value, evtId, (err) => {
+      if (err) alert(err);
+      else alert("New bid");
+    });
   }
 
   renderTickets() {
-    return this.props.event.tickets.map((t,i) => 
-      <Ticket
-        key={i}
-        ticket={t}
-        handleBidSubmit={this.props.handleBidSubmit}
-      >
-      </Ticket>
+    if (this.props.event) {
+      let tktList = this.props.event.tickets;
+      return tktList.map((t, i) =>
+        <Ticket key={i} ticket={t} handleBidSubmit={this.handleBidSubmit.bind(this)}>  </Ticket>
+      );
+    }
+    else return "";
+  }
+
+  renderCreate() {
+    return (
+      <form>
+        <div className="form-group row">
+          <label className="col-2 col-form-label roboto">Ticket Description (Section)</label>
+          <div className="col-10">
+            <input className="form-control" type="text" placeholder="Ticket Description (Section)" id="example-section-input" onChange={this.handleChangeDescription.bind(this)} />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label className="col-2 col-form-label roboto">Base Price</label>
+          <div className="col-10">
+            <input className="form-control" type="number" placeholder="Base Price" id="example-incs-input" onChange={this.handleChangeMinPrice.bind(this)} />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label className="col-2 col-form-label roboto">Increments</label>
+          <div className="col-10">
+            <input className="form-control" type="number" placeholder="Increments" id="example-incs-input" onChange={this.handleChangeIncrements.bind(this)} />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label className="col-2 col-form-label roboto">Buy Now Price</label>
+          <div className="col-10">
+            <input className="form-control" type="number" placeholder="Buy Now Price" id="example-buyNow-input" onChange={this.handleChangeBuyNow.bind(this)} />
+          </div>
+        </div>
+        <div className="form-group row">
+          <label className="col-2 col-form-label roboto">Due Date</label>
+          <div className="col-10">
+            <input className="form-control" type="date" placeholder="2011-08-19" id="example-date-input" onChange={this.handleChangeDate.bind(this)} />
+          </div>
+        </div>
+        <div className="row justify-content-center align-self-center">
+          <button type="submit" className="btn new-event-btn" onClick={this.handleAddTicket.bind(this)}>Add</button>
+          <button type="button" className="btn btn-close" onClick={this.handleClose.bind(this)}>Close</button>
+        </div>
+      </form>
     );
   }
 
   render() {
-    let show = this.state.showAdd ? <CreateTicket handleClose={this.handleClose.bind(this)} handleSubmitTicket={this.handleSubmitTicket.bind(this)} handleChangeDescription={this.handleChangeDescription.bind(this)} handleChangeIncrements={this.handleChangeIncrements.bind(this)} handleChangeBuyNow={this.handleChangeBuyNow.bind(this)} handleChangeDate={this.handleChangeDate.bind(this)}></CreateTicket>
-    : "";
-    let createButton = !this.state.showAdd ? <button className="btn new-event-btn" onClick={this.handleClick.bind(this)}>Add New Ticket</button> : "";
+    let show = this.state.showAdd ? this.renderCreate() : <button className="btn new-event-btn" onClick={this.handleClick.bind(this)}>Add New Ticket</button>;
+    let title = this.props.event ? "Ticket Gallery For " + this.props.event.name : "";
+
     return (
       <div className="tickets">
+        <Navbar events={[]} ></Navbar>
+        <br />      <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
         <div className="container">
-            <div className="row justify-content-center align-self-center">
-                <h3 className="raleway">Ticket Gallery For {this.props.event.name}</h3>
-            </div>
-            <div className="row justify-content-center align-self-center">
-                {createButton}
-            </div>
-            <div>
-              {show}
-            </div>
-            <hr />
-            <div className="row justify-content-center align-self-center">
-                {this.renderTickets()}
-            </div>
+          <div className="row justify-content-center align-self-center">
+            <h3 className="raleway">{title}</h3>
+          </div>
+          <div className="row justify-content-center align-self-center">
+            {show}
+          </div>
+          <hr />
+          <div className="row justify-content-center align-self-center">
+            {this.renderTickets()}
+          </div>
         </div>
       </div>
     );
   }
 };
 
-Tickets.propTypes = {
-  event: PropTypes.object.isRequired,
-  handleSubmitTicket: PropTypes.func.isRequired,
-  handleBidSubmit: PropTypes.func.isRequired,
-};
+export default withTracker((props) => {
+  let evtId = props.match.params.id;
+  Meteor.subscribe('oneEvt', evtId);
+  Meteor.subscribe('allBids');
+  return {
+    event: EventsDB.find().fetch()[0],
+    currentUser: Meteor.user(),
+  };
+})(Tickets);

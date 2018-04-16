@@ -103,7 +103,10 @@ export default class Navbar extends Component {
         <div className="collapse navbar-collapse raleway" id="navbarTogglerDemo02">
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li className="nav-item active">
-                    <a className="nav-link beige-font" onClick={this.props.homeClick} href="/">Home <span className="sr-only">(current)</span></a>
+                    <a className="nav-link beige-font" href="/">Home <span className="sr-only">(current)</span></a>
+                    <a className="nav-link beige-font" href="login">Login <span className="sr-only">(current)</span></a>
+                    <a className="nav-link beige-font" href="/myTickets">My Tickets <span className="sr-only">(current)</span></a>
+                    <a className="nav-link beige-font" href="/myBids">My Bids <span className="sr-only">(current)</span></a>
                 </li>
                 {/*<li className="nav-item">
                     <a className="nav-link beige-font" href="/#">Register</a>
@@ -129,10 +132,4 @@ export default class Navbar extends Component {
   render() {
     return this.renderNavbar();
   }
-};
-
-Navbar.propTypes = {
-  events: PropTypes.array.isRequired,
-  homeClick: PropTypes.func.isRequired,
-  onClickSearch: PropTypes.func.isRequired,
 };
