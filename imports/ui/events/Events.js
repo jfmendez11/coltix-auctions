@@ -126,6 +126,8 @@ export default class Events extends Component {
     let show = this.props.currentUser ? (this.state.showAdd ? this.renderCreate() : this.renderNoCreate()) : "";
     let options = ["Name", "Date", "Venue"];
     let defaultOption = options[this.state.order];
+    let currentDate = new Date().getTime();
+    let filteredEvents = this.props.events.filter((e, i) => i >= this.state.min && i <= this.state.max && e.date.getTime() - currentDate > 0);
     return(
       <div className="events">
         <div className="container container-2">
@@ -148,7 +150,7 @@ export default class Events extends Component {
               <Pagination
                 activePage={this.state.activePage}
                 itemsCountPerPage={9}
-                totalItemsCount={this.props.events.length}
+                totalItemsCount={filteredEvents.length}
                 pageRangeDisplayed={5}
                 onChange={this.handlePageChange.bind(this)}
                 linkClass="pagination-a"
