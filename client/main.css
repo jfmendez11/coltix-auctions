@@ -160,7 +160,7 @@ td.table-cell {
     border-radius: 5px;
     max-width: 135px;
     max-height: 25px;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 .bold-text {
