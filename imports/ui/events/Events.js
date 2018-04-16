@@ -144,6 +144,7 @@ export default class Events extends Component {
           </div>
           <hr />
             <div className="row justify-content-center align-self-center">
+              //Me parece muy bien que utilicen paginación, esto ayuda a que las personas tengan una mejor experiencia al usar la página.
               <Pagination
                 activePage={this.state.activePage}
                 itemsCountPerPage={9}
