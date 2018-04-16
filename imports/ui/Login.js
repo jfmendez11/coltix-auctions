@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Accounts } from 'meteor/accounts-base';
 import Navbar from "./Navbar";
 import { withTracker } from "meteor/react-meteor-data";
-
+import { EventsDB } from "../api/events";
 
 class Login extends Component {
 
