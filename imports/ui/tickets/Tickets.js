@@ -91,7 +91,8 @@ class Tickets extends Component {
 
   renderTickets() {
     if (this.props.event) {
-      let tktList = this.props.event.tickets.filter((t,i) => i >= this.state.min && i <= this.state.max && t.dueDate.getTime() - new Date().getTime() > 0);
+      let tktListFilter = this.props.event.tickets.filter((t) => t.dueDate.getTime() - new Date().getTime() > 0);
+      let tktList = tktListFilter.filter((t, i) => i >= this.state.min && i <= this.state.max);
       return tktList.map((t, i) =>
         <Ticket key={i} ticket={t} handleBidSubmit={this.handleBidSubmit.bind(this)}>  </Ticket>
       );
@@ -143,6 +144,7 @@ class Tickets extends Component {
   render() {
     let show = this.state.showAdd ? this.renderCreate() : <button className="btn new-event-btn" onClick={this.handleClick.bind(this)}>Add New Ticket</button>;
     let title = this.props.event ? "Ticket Gallery For " + this.props.event.name : "";
+    let tktListFilter = this.props.event.tickets.filter((t) => t.dueDate.getTime() - new Date().getTime() > 0);
     console.log(this.props.event);
     return (
       <div className="tickets">
@@ -163,7 +165,7 @@ class Tickets extends Component {
               <Pagination
                 activePage={this.state.activePage}
                 itemsCountPerPage={9}
-                totalItemsCount={this.props.event.tickets.length}
+                totalItemsCount={tktListFilter.length}
                 pageRangeDisplayed={5}
                 onChange={this.handlePageChange.bind(this)}
                 linkClass="pagination-a"
