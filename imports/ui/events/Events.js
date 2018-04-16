@@ -4,12 +4,20 @@ import { Glyphicon, Button, Modal } from 'react-bootstrap';
 import { EventsDB } from "../../api/events";
 import Event from "./Event";
 import {Tickets} from '../tickets/Tickets';
+import Pagination from "react-js-pagination";
+import Dropdown from "react-dropdown";
+
+import 'react-dropdown/style.css'
 
 export default class Events extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      activePage: 1,
+      min: 0,
+      max: 8,
+      order: 0,
       showAdd: false,
       name: "",
       venue: "",
@@ -50,8 +58,30 @@ export default class Events extends Component {
     this.setState({ showAdd: false });
   }
 
+  handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({activePage: pageNumber});
+    let max = pageNumber*9 - 1;
+    let min = (pageNumber-1)*9;
+    console.log(min + " " + max);
+    this.setState({min: min, max: max});
+  }
+
+  _onSelect(option) {
+    console.log(option);
+    if (option.value === "Date")
+      this.setState({order: 1});
+    else if (option.value === "Venue")
+      this.setState({order: 2});
+    else
+      this.setState({order: 0});
+    
+    return this.props._onSelect(option);
+  }
+
   renderEvents() {
-    return this.props.events.map((e, i) =>
+    let filteredEvents = this.props.events.filter((e, i) => i >= this.state.min && i <= this.state.max);
+    return filteredEvents.map((e, i) =>
       <Event key={i} event={e}></Event>
     );
   }
@@ -93,19 +123,37 @@ export default class Events extends Component {
 
   render() {
     let show = this.props.currentUser ? (this.state.showAdd ? this.renderCreate() : this.renderNoCreate()) : "";
+    let options = ["Name", "Date", "Venue"];
+    let defaultOption = options[this.state.order];
     return(
       <div className="events">
-        <div className="container">
+        <div className="container container-2">
           <div className="row justify-content-center align-self-center">
             <h3 className="raleway">Event Gallery</h3>
           </div>
-          <hr />
           <div>
             {show}
           </div>
+          <hr />
+          <div className="row justify-content-center align-self-center">
+              <h6>Sort Events By:</h6> 
+              <span><Dropdown options={options} onChange={this._onSelect.bind(this)} value={defaultOption} placeholder={defaultOption} /></span>
+            </div>
           <div className="row justify-content-center align-self-center">
             {this.renderEvents()}
           </div>
+          <hr />
+            <div className="row justify-content-center align-self-center">
+              <Pagination
+                activePage={this.state.activePage}
+                itemsCountPerPage={9}
+                totalItemsCount={this.props.events.length}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange.bind(this)}
+                linkClass="pagination-a"
+                activeLinkClass="active-a"
+              />
+            </div>
         </div>
       </div>
     );

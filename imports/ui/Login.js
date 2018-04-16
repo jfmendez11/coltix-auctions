@@ -165,12 +165,13 @@ class Login extends Component {
 
   render() {
     let show = this.props.currentUser ? this.renderLogout() : (this.state.login ? this.renderLogin() : (this.state.create ? this.renderCreate() : this.renderOptions()));
-    return (<div><Navbar events={[]} ></Navbar> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> <div>{show}</div></div>);
+    return (<div><Navbar events={this.props.list} onClickSearch={this.props.onClickSearch}></Navbar> <div className="container container-2" id="login" >{show}</div></div>);
   }
 };
 
 export default withTracker(() => {
   return {
+    list: EventsDB.find({}).fetch(),
     currentUser: Meteor.user(),
   };
 })(Login);

@@ -1,5 +1,4 @@
 /* CSS declarations go here */
-/* Napoli Color Palette */
 div {
     display: block;
 }
@@ -9,7 +8,7 @@ div {
 }
 
 .dark-blue-bckgrnd {
-    background-color: #0177c1;
+    background-color: #000000;
 }
 
 .light-blue-font {
@@ -33,7 +32,7 @@ div {
 }
 
 .beige-bckgrnd {
-    background-color: #f1f4f0;
+    background-color: #d2d7da;
 }
 
 .red-font {
@@ -64,14 +63,14 @@ div {
 }
 
 .nav-link:hover {
-    color: #f0494b;
+    color: #4694be;
 }
 
 .navbar-brand:hover {
-    color: #f0494b;
+    color: #4694be;
 }
 
-.container {
+.container-2 {
     border-radius: 15px;
     background: #ffffff;
     padding: 20px;
@@ -79,24 +78,40 @@ div {
 }
 
 #welcome {
-    margin-top: 15px; 
+    margin-top: 25px;
+    border-radius: 15px;
+    background: #ffffff;
+    padding: 20px;
+}
+
+#login {
+    margin-top: 75px;
 }
 
 hr {
     border-width: 2px;
-    border-color: #0796db;
+    border-color: #b9bdc0;
 }
 
 .event {
     margin: 10px;
-    border: 2px solid #0796db;
+    border: 2px solid #b9bdc0;
     border-radius: 5px;
 }
 
 .event-btn {
-    background-color: #0796db;
+    background-color: #4694be;
     color: #f1f4f0;
-    border: 2px solid #0796db;
+    border: 2px solid #4694be;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 6px 12px 6px 12px;
+}
+
+.search-btn {
+    background-color: #4694be;
+    color: #f1f4f0;
+    border: 2px solid #4694be;
     margin: 10px;
     border-radius: 5px;
     padding: 6px 12px 6px 12px;
@@ -106,10 +121,14 @@ hr {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
+.search-btn:hover {
+    box-shadow: 0 12px 16px 0 rgba(255, 255, 255, 0.3), 0 17px 50px 0 rgba(255, 255, 255, 0.3);
+}
+
 .new-event-btn {
-    background-color: #f0494b;
+    background-color: #4694be;
     color: #f1f4f0;
-    border: 2px solid #f0494b;
+    border: 2px solid #4694be;
     margin: 5px;
 }
 
@@ -118,12 +137,12 @@ hr {
 }
 
 .tickets {
-    margin-top: 65px;
+    margin-top: 75px;
 }
 
 .ticket {
     margin: 10px;
-    border: 2px solid #0796db;
+    border: 2px solid #b9bdc0;
     border-radius: 5px;
 }
 
@@ -135,10 +154,13 @@ hr {
     padding: 15px;
 }
 
-.table-cell {
-    background-color: #71c6f9;
+td.table-cell {
+    background-color: #b9bdc0;
     border: 2px solid #ffffff;
     border-radius: 5px;
+    max-width: 135px;
+    max-height: 25px;
+    overflow: scroll;
 }
 
 .bold-text {
@@ -146,7 +168,7 @@ hr {
 }
 
 #dollar {
-    background-color: #f0494b;
+    background-color: #4694be;
     color: #f1f4f0;
     border: 1px solid #6c757d;
 }
@@ -165,6 +187,55 @@ hr {
 
 .btn-close:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+nav {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
+
+.percentage {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: scroll;
+    font-size: 20px;
+}
+
+.nav-fade:hover {
+    box-shadow: 0 12px 16px 0 rgba(70, 148, 190,0.24), 0 17px 50px 0 rgba(70, 148, 190,0.19);
+}
+
+.pagination-a {
+    padding: 6px 12px 6px 12px;
+    border-style: solid;
+    border-color: #b9bdc0;
+    border-width: 1px 1px 1px 1px;
+    color: #4694be;
+    margin: 1px;
+    border-radius: 5px;
+}
+
+.pagination {
+    margin-top: 16px;
+}
+
+.pagination-a:hover {
+    background-color: #d2d7da;
+    color: #4694be;
+    text-decoration: none;
+}
+
+.active-a {
+    background-color: #4694be;
+    color: #ffffff;
+}
+
+.Dropdown-control {
+    padding: 3px 50px 5px 10px;
+}
+
+h6 {
+    padding: 7px;
 }
 
 .react-autosuggest__container {

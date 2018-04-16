@@ -93,36 +93,41 @@ export default class Navbar extends Component {
     };
     return (
     <nav className="navbar navbar-expand-lg dark-blue-bckgrnd raleway fixed-top">
-        <a className="navbar-brand beige-font" onClick={this.props.homeClick} href="/">
-            Coltix Auctions
-        </a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse raleway" id="navbarTogglerDemo02">
-            <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li className="nav-item active">
-                    <a className="nav-link beige-font" href="/">Home <span className="sr-only">(current)</span></a>
+        <div className="container">
+          <a className="navbar-brand beige-font" onClick={this.props.homeClick} href="/">
+            <img src="https://c1.staticflickr.com/1/864/27589160658_55e0325859_o.png" width="40" height="40"/>
+          </a>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+          </button>
+  
+          <div className="collapse navbar-collapse raleway" id="navbarTogglerDemo02">
+              <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                  <li className="nav-item active">
+                      <a className="nav-link beige-font" href="/">Home <span className="sr-only">(current)</span></a>
+                  </li>
+                  <li className="nav-item">
                     <a className="nav-link beige-font" href="login">Login <span className="sr-only">(current)</span></a>
+                  </li>
+                  <li className="nav-item">
                     <a className="nav-link beige-font" href="/myTickets">My Tickets <span className="sr-only">(current)</span></a>
+                  </li>
+                  <li className="nav-item">
                     <a className="nav-link beige-font" href="/myBids">My Bids <span className="sr-only">(current)</span></a>
-                </li>
-                {/*<li className="nav-item">
-                    <a className="nav-link beige-font" href="/#">Register</a>
-                </li>*/}
-            </ul>
-            <form className="form-inline my-2 my-lg-0">
-                <Autosuggest 
-                    suggestions={suggestions}
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                    getSuggestionValue={this.getSuggestionValue}
-                    renderSuggestion={this.renderSuggestion}
-                    onSuggestionSelected={this.onSuggestionSelected}
-                    inputProps={inputProps} 
-                />
-            </form>
+                  </li>
+              </ul>
+              <form className="form-inline my-2 my-lg-0">
+                  <Autosuggest 
+                      suggestions={suggestions}
+                      onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                      onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                      getSuggestionValue={this.getSuggestionValue}
+                      renderSuggestion={this.renderSuggestion}
+                      onSuggestionSelected={this.onSuggestionSelected}
+                      inputProps={inputProps} 
+                  />
+              </form>
+          </div>
         </div>
     </nav>
     );

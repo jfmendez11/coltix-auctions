@@ -5,12 +5,16 @@ import { Link } from 'react-router-dom'
 import { EventsDB, BidsDB } from "../../api/events";
 import Ticket from "./Ticket";
 import Navbar from "../Navbar";
+import Pagination from "react-js-pagination";
 
 
 class Tickets extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      activePage: 1,
+      min: 0,
+      max: 8,
       showAdd: false,
       description: "",
       increments: 0,
@@ -76,6 +80,15 @@ class Tickets extends Component {
     });
   }
 
+  handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({activePage: pageNumber});
+    let max = pageNumber*9 - 1;
+    let min = (pageNumber-1)*9;
+    console.log(min + " " + max);
+    this.setState({min: min, max: max});
+  }
+
   renderTickets() {
     if (this.props.event) {
       let tktList = this.props.event.tickets;
@@ -130,22 +143,11 @@ class Tickets extends Component {
   render() {
     let show = this.state.showAdd ? this.renderCreate() : <button className="btn new-event-btn" onClick={this.handleClick.bind(this)}>Add New Ticket</button>;
     let title = this.props.event ? "Ticket Gallery For " + this.props.event.name : "";
-
+    console.log(this.props.event);
     return (
       <div className="tickets">
-        <Navbar events={[]} ></Navbar>
-        <br />      <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-
-        <div className="container">
+        <Navbar events={this.props.list} onClickSearch={this.props.onClickSearch}></Navbar>
+        <div className="container container-2">
           <div className="row justify-content-center align-self-center">
             <h3 className="raleway">{title}</h3>
           </div>
@@ -156,6 +158,18 @@ class Tickets extends Component {
           <div className="row justify-content-center align-self-center">
             {this.renderTickets()}
           </div>
+          <hr />
+            <div className="row justify-content-center align-self-center">
+              <Pagination
+                activePage={this.state.activePage}
+                itemsCountPerPage={9}
+                totalItemsCount={this.props.event.tickets.length}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange.bind(this)}
+                linkClass="pagination-a"
+                activeLinkClass="active-a"
+              />
+            </div>
         </div>
       </div>
     );
@@ -167,6 +181,7 @@ export default withTracker((props) => {
   Meteor.subscribe('oneEvt', evtId);
   Meteor.subscribe('allBids');
   return {
+    list: EventsDB.find({}).fetch(),
     event: EventsDB.find().fetch()[0],
     currentUser: Meteor.user(),
   };

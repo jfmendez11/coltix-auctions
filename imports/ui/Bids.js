@@ -15,7 +15,7 @@ class Bids extends Component {
     return (
       <div>
         <div>
-          <Navbar events={[]} ></Navbar>
+          <Navbar events={this.props.events} onClickSearch={this.props.onClickSearch}></Navbar>
         </div>
       </div>
     );
@@ -26,6 +26,7 @@ export default withTracker(() => {
   Meteor.subscribe('allBids');
   return {
     list: BidsDB.find().fetch(),
+    events: EventsDB.find({}).fetch(),
     currentUser: Meteor.user(),
   };
 })(Bids);
