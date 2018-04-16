@@ -91,7 +91,7 @@ class Tickets extends Component {
 
   renderTickets() {
     if (this.props.event) {
-      let tktList = this.props.event.tickets;
+      let tktList = this.props.event.tickets.filter((t,i) => i >= this.state.min && i <= this.state.max && t.dueDate.getTime() - new Date().getTime() > 0);
       return tktList.map((t, i) =>
         <Ticket key={i} ticket={t} handleBidSubmit={this.handleBidSubmit.bind(this)}>  </Ticket>
       );

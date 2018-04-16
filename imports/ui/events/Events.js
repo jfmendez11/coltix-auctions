@@ -80,7 +80,8 @@ export default class Events extends Component {
   }
 
   renderEvents() {
-    let filteredEvents = this.props.events.filter((e, i) => i >= this.state.min && i <= this.state.max);
+    let currentDate = new Date().getTime();
+    let filteredEvents = this.props.events.filter((e, i) => i >= this.state.min && i <= this.state.max && e.date.getTime() - currentDate > 0);
     return filteredEvents.map((e, i) =>
       <Event key={i} event={e}></Event>
     );
