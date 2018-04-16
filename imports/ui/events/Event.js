@@ -9,6 +9,8 @@ export default class Event extends Component {
     return (
       <div className="event col-md-3">
         <div className="row justify-content-center align-self-center">
+      //Para temas de mostrar algo de ejemplo podrían haber puesto imagenes de eventos reales. Interactuando con la página todos
+      //los eventos tienen la misma imagen. Creo que si se tiene una imagen alusiva al evento hace que sea más fácil identificarlo.
           <img className="event-img" src={this.props.event.imgSrc} width="200" height="200" alt={"Picture for " + this.props.event.name} />
         </div>
         <div className="row justify-content-center align-self-center">
