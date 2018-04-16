@@ -23,6 +23,9 @@ export default class Events extends Component {
       venue: "",
       date: "",
     };
+    //Tomas Venegas: Deberían hacer el bind de todas sus funciones aca, eso evita errores inesperados
+      //poro ejemplo
+      this.handleChangeName =this.handleChangeName.bind(this);
   }
 
   handleChangeName(e) {

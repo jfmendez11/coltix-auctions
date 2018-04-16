@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import { withTracker } from "meteor/react-meteor-data";
 import { EventsDB, BidsDB } from "../api/events";
 import Navbar from "./Navbar";
-import Events from "./events/Events";
-import { Accounts } from 'meteor/accounts-base';
+
 
 // import Tickets from './tickets/Tickets';
-
+// optmizar imports inutilizados
 class Bids extends Component {
 
   render() {

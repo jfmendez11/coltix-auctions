@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import PropTypes from "prop-types";
 import { withTracker } from "meteor/react-meteor-data";
 import { EventsDB, BidsDB } from "../api/events";
 import Navbar from "./Navbar";
-import Events from "./events/Events";
-import { Accounts } from 'meteor/accounts-base';
+
 
 // import Tickets from './tickets/Tickets';
 
 class myTkt extends Component {
 
   render() {
-    console.log(this.props.list);    
+    //Tomas Venegas: evitar los console log después de publicado
     return (
       <div>
         <div>
@@ -20,8 +18,8 @@ class myTkt extends Component {
       </div>
     );
   }
-};
-
+}
+//Tomas Venegas: no seria más organizado llamar esto desde App.js?
 export default withTracker(() => {
   Meteor.subscribe('myTickets');
   return {

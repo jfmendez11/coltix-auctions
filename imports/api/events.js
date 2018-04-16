@@ -7,23 +7,10 @@ export const BidsDB = new Mongo.Collection("bids");
 
 
 if (Meteor.isServer) {
-    // This code only runs on the server
-    // Meteor.publish('myTickets', function myTicketsPublication() {
-    //     var pipeline = [
-    //         { $unwind: "$tickets" },
-    //         { $match: { name: "EventoTickets" } }
-    //     ];
-    //     let t = EventsDB.aggregate(pipeline).map((child)=> child.childId );;
-    // });
+
 
     Meteor.publish('myTickets', function () {
-        // var pipeline = [{
-        //     $project: {
-        //         '_id': 0
-        //     }
-        // },
-        // { $unwind: "$tickets" }
-        // ];
+      
         let pipeline = [{
             $unwind: {
                 path: '$tickets',
@@ -44,14 +31,15 @@ if (Meteor.isServer) {
                 evtDate : '$date',
                 tkt : '$tickets',
             }
-        }]
+        }]; //Tomas Venegas: falta un punto y coma, no es más sencillo formar el objeto con esos valores y hacer un fetch de eso?
+        // a parte aquí el usuario tiene acceso a todos los elementos de la base de datos
         ReactiveAggregate(this, EventsDB, pipeline);
     });
 
     Meteor.publish('allEvents', function eventsPublication() {
         return EventsDB.find();
     });
-
+//Tomas Venegas: seguro que todos los usuarios deben tener los mismos permisos de lectura para todos los eventos?
     Meteor.publish('oneEvt', function oneEvtPublication(evtId) {
         return EventsDB.find({ _id: evtId });
     });

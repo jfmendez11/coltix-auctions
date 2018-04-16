@@ -25,3 +25,4 @@ Meteor.startup(() => {
   </Router>
     , document.getElementById("render-target"));
 });
+//Tomas Venegas: falta agregarle al html un tag de leng para mejorar la accesibilidad. Se puede hacer desde aca con un script
