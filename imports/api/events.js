@@ -134,6 +134,9 @@ Meteor.methods({
         }
 
         //Validate bid value 
+        if (!ticket.available) {
+            throw new Meteor.Error('Ticket is no longer available.');
+        }
         if (value <= ticket.currentBid) {
             throw new Meteor.Error('Bid must be higher than current one.');
         }

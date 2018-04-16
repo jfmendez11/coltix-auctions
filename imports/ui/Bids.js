@@ -9,15 +9,26 @@ import { Accounts } from 'meteor/accounts-base';
 // import Tickets from './tickets/Tickets';
 
 class Bids extends Component {
+renderBids(){
+  return "";
+}
 
   render() {
     console.log(this.props.list);    
     return (
-      <div>
-        <div>
-          <Navbar events={this.props.events} onClickSearch={this.props.onClickSearch}></Navbar>
+      <div className="tickets">
+      <Navbar events={this.props.events} onClickSearch={this.props.onClickSearch}></Navbar>
+      <div className="container container-2">
+        <div className="row justify-content-center align-self-center">
+          <h3 className="raleway">My Bids</h3>
         </div>
+        <hr />
+        <div className="row justify-content-center align-self-center">
+          {this.renderBids()}
+        </div>
+        <hr />
       </div>
+    </div>
     );
   }
 };

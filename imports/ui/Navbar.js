@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import Autosuggest from "react-autosuggest";
+import { Link } from 'react-router-dom';
+
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -91,6 +93,8 @@ export default class Navbar extends Component {
       value,
       onChange: this.onChange
     };
+    let myT = Meteor.user()? "/myTickets": "/login";
+    let myB = Meteor.user()? "/myBids": "/login";
     return (
     <nav className="navbar navbar-expand-lg dark-blue-bckgrnd raleway fixed-top">
         <div className="container">
@@ -110,10 +114,10 @@ export default class Navbar extends Component {
                     <a className="nav-link beige-font" href="login">Login <span className="sr-only">(current)</span></a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link beige-font" href={Meteor.user()? "/myTickets": "/login"}>My Tickets <span className="sr-only">(current)</span></a>
+                  <Link to={myT}><a className="nav-link beige-font" href="">My Tickets <span className="sr-only">(current)</span></a></Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link beige-font" href={Meteor.user()? "/myBids": "/login"}>My Bids <span className="sr-only">(current)</span></a>
+                  <Link to={myB}><a className="nav-link beige-font" href="">My Bids <span className="sr-only">(current)</span></a></Link>
                   </li>
               </ul>
               <form className="form-inline my-2 my-lg-0">
