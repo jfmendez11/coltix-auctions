@@ -44,7 +44,6 @@ class Login extends Component {
     }
     Accounts.createUser(options, (err) => {
       if (err) alert(err);
-      else alert("Success");
     });
   }
 
@@ -52,7 +51,6 @@ class Login extends Component {
     event.preventDefault();
     Meteor.loginWithPassword(this.state.username, this.state.password, (err) => {
       if (err) alert(err);
-      else alert("Logged In.");
     });
   }
 
@@ -60,7 +58,6 @@ class Login extends Component {
     event.preventDefault();
     Meteor.logout((err) => {
       if (err) alert(err);
-      else alert("Logout");
     });
     this.setState({
       login: false,
@@ -166,8 +163,7 @@ class Login extends Component {
   render() {
     let show = this.props.currentUser ? this.renderLogout() : (
       <div className = "row"><div className="col-6">{this.renderLogin()}</div><div className="col-6">{this.renderCreate()}</div></div>)
-      // this.state.login ? this.renderLogin() : (this.state.create ? this.renderCreate() : this.renderOptions()));
-    return (<div><Navbar events={this.props.list} onClickSearch={this.props.onClickSearch}></Navbar> <div className="container container-2" id="login" >{show}</div></div>);
+    return (<div><Navbar></Navbar> <div className="container container-2" id="login" >{show}</div></div>);
   }
 };
 

@@ -59,16 +59,13 @@ export default class Events extends Component {
   }
 
   handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
     let max = pageNumber*9 - 1;
     let min = (pageNumber-1)*9;
-    console.log(min + " " + max);
     this.setState({min: min, max: max});
   }
 
   _onSelect(option) {
-    console.log(option);
     if (option.value === "Date")
       this.setState({order: 1});
     else if (option.value === "Venue")

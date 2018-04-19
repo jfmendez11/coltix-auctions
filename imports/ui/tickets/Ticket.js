@@ -17,17 +17,23 @@ export default class Ticket extends Component {
   }
 
   renderTicket() {
+    let available = !this.props.ticket.owner == Meteor.userId() ? <input type="number" className="form-control" id="bid-border" placeholder="Enter your bid" onKeyPress={this.handleChange.bind(this)}/>
+: "You can't bid on your own ticket";
     return (
         <div>
           <div className="row justify-content-center align-self-center">
             <img className="event-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt0GKPQ8kZxKJ_5Bam2moyLlFj6HAVl3xTpbAT6JUl40U2YCba" width="200" height="200" alt={"Picture for " + this.props.ticket.description} />
           </div>
           <div className="row justify-content-center align-self-center">
-              <h5 className="raleway">Description: {this.props.ticket.description}</h5>
+              <h5 className="raleway">Location: {this.props.ticket.description}</h5>
           </div>
           <div className="row justify-content-center align-self-center">
               <table className="robto">
                 <tbody>
+                <tr>
+                    <td className="table-cell text-center bold-text">Event</td>
+                    <td className="table-cell text-center">{this.props.ticket.evtName}</td>
+                  </tr>
                   <tr>
                     <td className="table-cell text-center bold-text">Bids</td>
                     <td className="table-cell text-center">{this.props.ticket.bids}</td>
@@ -57,8 +63,8 @@ export default class Ticket extends Component {
                 <div className="input-group-prepend">
                   <span className="input-group-text" id="dollar">$</span>
                 </div>
-                <input type="number" className="form-control" id="bid-border" placeholder="Enter your bid" onKeyPress={this.handleChange.bind(this)}/>
-              </div>
+                  {available}              
+                </div>
             </form>
           </div>
         </div>
@@ -69,7 +75,7 @@ export default class Ticket extends Component {
     e.preventDefault();
     let value = this.state.bid;
     let owner = this.props.ticket.owner;
-    let idTkt = this.props.ticket.id;
+    let idTkt = this.props.ticket._id;
     this.props.handleBidSubmit(value, owner,idTkt);
   } 
 

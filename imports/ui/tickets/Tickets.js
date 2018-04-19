@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { withTracker } from "meteor/react-meteor-data";
 import { Link } from 'react-router-dom'
-import { EventsDB, BidsDB } from "../../api/events";
+import { EventsDB, BidsDB, TicketsDB } from "../../api/events";
 import Ticket from "./Ticket";
 import Navbar from "../Navbar";
 import Pagination from "react-js-pagination";
@@ -65,33 +65,30 @@ class Tickets extends Component {
     let minPrice = parseInt(this.state.minPrice);
     let buyNow = parseInt(this.state.buyNow);
     let date = new Date(this.state.dueDate);
-    Meteor.call('tickets.add', section, incs, buyNow, minPrice, date, evtId, (err) => {
+    let name = this.props.event.name;
+    Meteor.call('tickets.add', section, incs, buyNow, minPrice, date, evtId, name, (err) => {
       if (err) alert(err);
-      else alert("Ticket added");
     });
-    this.setState({ showAdd: false });
+    
   }
 
   handleBidSubmit(value, owner, idTkt) {
-    let evtId = this.props.match.params.id;
+    let evtId = this.props.match.params.id;    
     Meteor.call('bid.add', owner, idTkt, value, evtId, (err) => {
       if (err) alert(err);
-      else alert("New bid");
     });
   }
 
   handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
     let max = pageNumber*9 - 1;
     let min = (pageNumber-1)*9;
-    console.log(min + " " + max);
     this.setState({min: min, max: max});
   }
 
   renderTickets() {
     if (this.props.event) {
-      let tktListFilter = this.props.event.tickets.filter((t) => t.dueDate.getTime() - new Date().getTime() > 0);
+      let tktListFilter = this.props.list.filter((t) => (t.dueDate.getTime() - new Date().getTime() > 0) && t.available);
       let tktList = tktListFilter.filter((t, i) => i >= this.state.min && i <= this.state.max);
       return tktList.map((t, i) =>
         <Ticket key={i} ticket={t} handleBidSubmit={this.handleBidSubmit.bind(this)}>  </Ticket>
@@ -104,9 +101,9 @@ class Tickets extends Component {
     return (
       <form>
         <div className="form-group row">
-          <label className="col-2 col-form-label roboto">Ticket Description (Section)</label>
+          <label className="col-2 col-form-label roboto">Location</label>
           <div className="col-10">
-            <input className="form-control" type="text" placeholder="Ticket Description (Section)" id="example-section-input" onChange={this.handleChangeDescription.bind(this)} />
+            <input className="form-control" type="text" placeholder="Location" id="example-section-input" onChange={this.handleChangeDescription.bind(this)} />
           </div>
         </div>
         <div className="form-group row">
@@ -144,11 +141,10 @@ class Tickets extends Component {
   render() {
     let show = this.state.showAdd ? this.renderCreate() : <button className="btn new-event-btn" onClick={this.handleClick.bind(this)}>Add New Ticket</button>;
     let title = this.props.event ? "Ticket Gallery For " + this.props.event.name : "";
-    let tktListFilter = this.props.event.tickets.filter((t) => t.dueDate.getTime() - new Date().getTime() > 0);
-    console.log(this.props.event);
+    let tktListFilter = this.props.list.filter((t) => t.dueDate.getTime() - new Date().getTime() > 0);
     return (
       <div className="tickets">
-        <Navbar events={this.props.list} onClickSearch={this.props.onClickSearch}></Navbar>
+        <Navbar></Navbar>
         <div className="container container-2">
           <div className="row justify-content-center align-self-center">
             <h3 className="raleway">{title}</h3>
@@ -182,9 +178,10 @@ export default withTracker((props) => {
   let evtId = props.match.params.id;
   Meteor.subscribe('oneEvt', evtId);
   Meteor.subscribe('allBids');
+  Meteor.subscribe("allTickets");
   return {
-    list: EventsDB.find({"date": { $gte: new Date()}}).fetch(),
-    event: EventsDB.find().fetch()[0],
+    list: TicketsDB.find({"event": evtId}).fetch(),
+    event: EventsDB.find({"_id": evtId}).fetch()[0],
     currentUser: Meteor.user(),
   };
 })(Tickets);

@@ -4,40 +4,22 @@ import { check } from 'meteor/check';
 
 export const EventsDB = new Mongo.Collection("events");
 export const BidsDB = new Mongo.Collection("bids");
+export const TicketsDB = new Mongo.Collection("tickets");
 
 
 if (Meteor.isServer) {
     // This code only runs on the server
 
     Meteor.publish('myTickets', function () {
-        let pipeline = [{
-            $unwind: {
-                path: '$tickets',
-                includeArrayIndex: 'suffix'
-            }
-        }, {
-            $project: {
-                _id: {
-                    $concat: ['$_id',
-                        '_',
-                        {
-                            $substr: ['$suffix', 0, -1]
-                        }
-                    ]
-                },
-                evtName: '$name',
-                evtVenue: '$venue',
-                evtDate: '$date',
-                tkt: '$tickets',
-            }
-        }, {
-            $match: { "tkt.owner": this.userId }
-        }]
-        ReactiveAggregate(this, EventsDB, pipeline);
+        return TicketsDB.find({ owner: this.userId });
     });
 
     Meteor.publish('allEvents', function eventsPublication() {
         return EventsDB.find();
+    });
+
+    Meteor.publish('allTickets', function eventsPublication() {
+        return TicketsDB.find();
     });
 
     Meteor.publish('oneEvt', function oneEvtPublication(evtId) {
@@ -59,53 +41,79 @@ Meteor.methods({
 
         // Make sure the user is logged in
         if (!this.userId) {
-            throw new Meteor.Error('not-authorized');
+            throw new Meteor.Error("You must login first.");
+        }
+
+        if (date < new Date()) {
+            throw new Meteor.Error("Check the event date.");
         }
 
         EventsDB.insert({
             name,
             venue,
             date,
-            imgSrc,
-            tickets: [],
+            imgSrc
         });
+    },'tickets.giveOne'(tktId) {
+        check(tktId, String);
+
+        if (!this.userId) {
+            throw new Meteor.Error("You must login first.");
+        }
+            return TicketsDB.findOne({ _id: tktId });
     },
     'events.remove'(eventId) {
         check(eventId, String);
+
+        if (!this.userId) {
+            throw new Meteor.Error("You must login first.");
+        }
         EventsDB.remove(eventId);
     },
-    'tickets.add'(section, incs, buyNow, minPrice, date, evtId) {
+    'tickets.add'(section, incs, buyNow, minPrice, date, evtId, evtName) {
         check(section, String);
         check(incs, Number);
         check(buyNow, Number);
         check(minPrice, Number);
         check(date, Date);
         check(evtId, String);
+        check(evtName, String);
 
         // Make sure the user is logged in
         if (!this.userId) {
-            throw new Meteor.Error('not-authorized');
+            throw new Meteor.Error("You must login first.");
         }
 
-        let ticketList = EventsDB.findOne({ _id: evtId }).tickets;
-        let newId = evtId + "-" + ticketList.length;
+        let evt = EventsDB.findOne({ _id: evtId });
+
+        if (date < new Date()) {
+            throw new Meteor.Error("Check the due date.");
+        }
+
+        if (date > evt.date) {
+            throw new Meteor.Error("Deadline can't be after the event's date.");
+        }
+
+        if (buyNow < minPrice) {
+            throw new Meteor.Error("The base price can't be higher than the Buy-Now price.");
+        }
+
         let newTkt = {
-            id: newId,
+            event: evtId,
             description: section,
             increments: incs,
             bids: 0,
-            currentBid: 0,
+            currentBid: minPrice,
             minPrice: minPrice,
             buyNow: buyNow,
             dueDate: date,
             owner: this.userId,
-            available: true
+            available: true,
+            evtName: evtName,
+            bidder: ""
         }
 
-        ticketList.push(newTkt);
-        EventsDB.update(evtId, {
-            $set: { tickets: ticketList }
-        });
+        TicketsDB.insert(newTkt);
     },
     'bid.add'(owner, idTkt, value, evtId) {
         check(owner, String);
@@ -121,47 +129,45 @@ Meteor.methods({
             throw new Meteor.Error("Can't bid on your own ticket.");
         }
 
-        let ticketList = EventsDB.findOne({ _id: evtId }).tickets;
-        let ticket;
-        let tktIndex = 0;
-
-        for (let i = 0; i < ticketList.length; i++) {
-            if (ticketList[i].id === idTkt) {
-                ticket = ticketList[i];
-                tktIndex = i;
-                break;
-            }
-        }
+        let ticket = TicketsDB.findOne({ _id: idTkt });
 
         //Validate bid value 
         if (!ticket.available) {
             throw new Meteor.Error('Ticket is no longer available.');
         }
+
         if (value <= ticket.currentBid) {
             throw new Meteor.Error('Bid must be higher than current one.');
         }
+
         if (value - ticket.currentBid < ticket.increments) {
             throw new Meteor.Error('Minimum increase is ' + ticket.increments);
         }
-        else {
-            if (value > ticket.buyNow) {
-                ticket.available = false;
-            }
 
-            ticket.currentBid = value;
-            ticket.bids += 1;
-            ticketList[tktIndex] = ticket;
-            EventsDB.update(evtId, {
-                $set: { tickets: ticketList }
-            });
-
-            BidsDB.insert({
-                idTkt,
-                owner,
-                value,
-                final: !ticket.available,
-                bidder: this.userId,
-            });
+        if (value >= ticket.buyNow) {
+            ticket.available = false;
         }
+
+        ticket.currentBid = value;
+        ticket.bids += 1;
+
+        TicketsDB.update(idTkt, {
+            $set: {
+                available: ticket.available,
+                currentBid: ticket.currentBid,
+                bids: ticket.bids,
+                bidder: this.userId
+            }
+        });
+
+        BidsDB.insert({
+            idTkt,
+            owner,
+            value,
+            final: !ticket.available,
+            bidder: this.userId,
+            evtId
+        });
+
     }
 });

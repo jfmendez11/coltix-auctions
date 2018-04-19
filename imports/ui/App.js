@@ -7,8 +7,6 @@ import Welcome from "./Welcome";
 import Events from "./events/Events";
 import { Accounts } from 'meteor/accounts-base';
 
-// import Tickets from './tickets/Tickets';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +27,7 @@ class App extends Component {
       <div>
         <div>
           <Welcome></Welcome>
-          <Navbar events={this.props.events} onClickSearch={this.props.onClickSearch}></Navbar>
+          <Navbar></Navbar>
           <Events events={events} currentUser={this.props.currentUser} _onSelect={this._onSelect.bind(this)}></Events>
         </div>
       </div>
