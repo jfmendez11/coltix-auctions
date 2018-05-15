@@ -6,6 +6,7 @@ export const EventsDB = new Mongo.Collection("events");
 export const BidsDB = new Mongo.Collection("bids");
 export const TicketsDB = new Mongo.Collection("tickets");
 
+//Hacen falta los test para los metodos creados en este archivo.
 
 if (Meteor.isServer) {
     // This code only runs on the server
